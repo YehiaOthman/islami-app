@@ -11,10 +11,17 @@ class SebhaTab extends StatefulWidget {
 }
 
 class _SebhaTabState extends State<SebhaTab> {
-   int tasbehCount = 0;
-   int currentTasbehCounter = 0;
-   double rotation = 0;
-   List<String> tasbeh = ['سبحان الله ','الحمدلله','الله اكبر','لا حول ولا قوه الا بالله ','استغفر الله'];
+  int tasbehCount = 0;
+  int currentTasbehCounter = 0;
+  double rotation = 0;
+  List<String> tasbeh = [
+    'سبحان الله ',
+    'الحمدلله',
+    'الله اكبر',
+    'لا حول ولا قوه الا بالله ',
+    'استغفر الله'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,17 +30,31 @@ class _SebhaTabState extends State<SebhaTab> {
         const SizedBox(
           height: 20,
         ),
-        Align(
-          alignment: Alignment.center,
-          child: Transform.rotate(
-            angle: rotation,
-            child: Image.asset(
-              AssetsManager.sebhaBody,
-              width: 300,
-              height: 300,
+        Stack(
+          clipBehavior: Clip.none ,
+          children: [
+            Align(
+              child: Image.asset(AssetsManager.sebhaHead,height: 200,),
             ),
-          ),
+            Positioned(
+              top: 85,
+              left: 0,
+              right: 0,
+              child: Align(
+                alignment: Alignment.center,
+                child: Transform.rotate(
+                  angle: rotation,
+                  child: Image.asset(
+                    AssetsManager.sebhaBody,
+                    width: 300,
+                    height: 300,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        SizedBox(height: 200,),
         const Text(
           StringsManager.tasbehCounter,
           textAlign: TextAlign.center,
@@ -55,42 +76,41 @@ class _SebhaTabState extends State<SebhaTab> {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           )),
         ),
-        const SizedBox(height:22 ,),
-
+        const SizedBox(
+          height: 22,
+        ),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: ColorsManager.goldColor,
+              backgroundColor: ColorsManager.goldColor,
             ),
             onPressed: () {
               tasbehCounter();
               currentTasbeh(currentTasbehCounter);
-              rotation+=10;
-              setState(() {
-
-              });
+              rotation += 10;
+              setState(() {});
             },
             child: Text(
               tasbeh[currentTasbehCounter],
-              style: const TextStyle(color: Colors.white,
-                fontSize: 20
-              ),
+              style: const TextStyle(color: Colors.white, fontSize: 20),
             ))
       ],
     );
   }
-  void tasbehCounter(){
-    if(tasbehCount==33){
-      tasbehCount=0;
-      if(currentTasbehCounter<tasbeh.length - 1){
+
+  void tasbehCounter() {
+    if (tasbehCount == 33) {
+      tasbehCount = 0;
+      if (currentTasbehCounter < tasbeh.length - 1) {
         currentTasbehCounter++;
-      }else{
+      } else {
         currentTasbehCounter = 0;
       }
-    }else{
+    } else {
       tasbehCount++;
     }
   }
-  void currentTasbeh(int index){
+
+  void currentTasbeh(int index) {
     tasbeh[index];
   }
 }
